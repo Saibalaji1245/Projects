@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        .qr-container {
+            margin: 20px 0;
+        }
+        img {
+            max-width: 300px;
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to our Website</h1>
+    <div class="qr-container">
+        <h2>Scan this QR Code to visit our website:</h2>
+        <img src="{{ url_for('static', filename=qr_filename) }}" alt="QR Code">
+    </div>
+    <p>This QR code will take you to: {{ request.url_root }}</p>
+</body>
+</html>
