@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Assistive Vision — Audio-First UI</title>
+
+  <!-- Classic serif/sans fonts for a timeless feel -->
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+  <script>
+    /* Tailwind configuration: custom colors & fonts */
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#0EA5A4',    // teal - buttons/active elements
+            secondary: '#2563EB',  // blue - links/highlights
+            accent: '#22C55E',     // green - alerts/important info
+            warning: '#EF4444',    // red - obstacle alerts
+            bg: '#F8FAFC',         // soft white background
+            card: '#ffffff',       // white cards
+            text: '#1F2937'        // dark gray text
+          },
+          fontFamily: {
+            sans: ['Open Sans', 'sans-serif'],
+            serif: ['Merriweather', 'serif']
+          }
+        }
+      }
+    };
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="bg-bg text-text flex flex-col min-h-screen antialiased font-serif leading-normal">
+  
+  <!-- NEW: Background Image and Overlay -->
+  <div class="background-gradient"></div>
+  <div class="background-overlay"></div>
+  <!-- All content (header, main, footer) must be on top of the overlay -->
+
+  <header class="bg-card/70 border-b border-primary/10 p-5 sticky top-0 z-50 shadow-lg backdrop-blur-sm" role="banner">
+    <nav class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-4" aria-label="Primary navigation">
+      
+      <div class="flex items-center gap-3 text-2xl font-black text-primary cursor-pointer" tabindex="0" aria-label="Home, Assistive Object Detection Project" role="link" id="logo-home-link">
+        <span class="text-3xl" aria-hidden="true">👁️</span>
+        Assistive Vision
+      </div>
+
+      <ul class="flex list-none flex-wrap items-center gap-2 justify-center md:gap-3" role="menubar" aria-label="Main menu">
+        
+        <li role="none"><button id="nav-home" class="nav-link-btn text-teal-800 border-2 border-transparent py-2 px-4 rounded-full text-base font-bold tracking-wide transition-all duration-200 ease-in-out cursor-pointer hover:bg-teal-200/70 hover:border-teal-300 hover:text-teal-900 focus:bg-teal-200/70 focus:border-teal-300 focus:text-teal-900 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-opacity-50" role="menuitem">Home</button></li>
+        <li role="none"><button id="nav-project" class="nav-link-btn text-teal-800 border-2 border-transparent py-2 px-4 rounded-full text-base font-bold tracking-wide transition-all duration-200 ease-in-out cursor-pointer hover:bg-teal-200/70 hover:border-teal-300 hover:text-teal-900 focus:bg-teal-200/70 focus:border-teal-300 focus:text-teal-900 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-opacity-50" role="menuitem">About</button></li>
+        <li role="none"><button id="nav-login" class="nav-link-btn text-teal-800 border-2 border-transparent py-2 px-4 rounded-full text-base font-bold tracking-wide transition-all duration-200 ease-in-out cursor-pointer hover:bg-teal-200/70 hover:border-teal-300 hover:text-teal-900 focus:bg-teal-200/70 focus:border-teal-300 focus:text-teal-900 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-opacity-50" role="menuitem">Login</button></li>
+        <li role="none"><button id="nav-register" class="nav-link-btn text-teal-800 border-2 border-transparent py-2 px-4 rounded-full text-base font-bold tracking-wide transition-all duration-200 ease-in-out cursor-pointer hover:bg-teal-200/70 hover:border-teal-300 hover:text-teal-900 focus:bg-teal-200/70 focus:border-teal-300 focus:text-teal-900 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-opacity-50" role="menuitem">Register</button></li>
+        <li role="none"><button id="nav-upload" class="nav-link-btn text-teal-800 border-2 border-transparent py-2 px-4 rounded-full text-base font-bold tracking-wide transition-all duration-200 ease-in-out cursor-pointer hover:bg-teal-200/70 hover:border-teal-300 hover:text-teal-900 focus:bg-teal-200/70 focus:border-teal-300 focus:text-teal-900 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-opacity-50" role="menuitem">Upload</button></li>
+        <li role="none"><button id="nav-history" class="nav-link-btn text-teal-800 border-2 border-transparent py-2 px-4 rounded-full text-base font-bold tracking-wide transition-all duration-200 ease-in-out cursor-pointer hover:bg-teal-200/70 hover:border-teal-300 hover:text-teal-900 focus:bg-teal-200/70 focus:border-teal-300 focus:text-teal-900 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-opacity-50" role="menuitem">History</button></li>
+        <li role="none"><button id="nav-logout" class="nav-link-btn text-red-800 border-2 border-transparent py-2 px-4 rounded-full text-base font-bold tracking-wide transition-all duration-200 ease-in-out cursor-pointer hover:bg-teal-200/70 hover:border-teal-300 hover:text-teal-900 focus:bg-teal-200/70 focus:border-teal-300 focus:text-teal-900 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-opacity-50 hidden" role="menuitem">Logout</button></li>
+
+        <li role="none"><button id="voice-nav-btn" class="nav-link-btn bg-teal-700 text-white border-2 border-teal-700 py-2 px-4 rounded-full text-base font-bold tracking-wide transition-all duration-200 ease-in-out cursor-pointer hover:bg-teal-800 hover:border-teal-800 focus:bg-teal-800 focus:border-teal-800 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-opacity-50" title="Navigate by voice (or press V)" aria-label="Navigate by voice"><span aria-hidden="true" class="mr-1">🎤</span> Voice Nav</button></li>
+        <li role="none"><button id="theme-toggle-btn" class="nav-link-btn bg-teal-700 text-white border-2 border-teal-700 py-2 px-4 rounded-full text-base font-bold tracking-wide transition-all duration-200 ease-in-out cursor-pointer hover:bg-teal-800 hover:border-teal-800 focus:bg-teal-800 focus:border-teal-800 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-opacity-50" title="Toggle theme" aria-label="Toggle theme"><span aria-hidden="true" class="mr-1">🌓</span> Theme</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Make sure main and footer have z-10 or higher to be above the background -->
+  <main id="main-content" class="flex-1 max-w-5xl mx-auto w-full mt-7 mb-4 px-4 z-10">
+    
+    <section id="home-page" class="page max-w-3xl mx-auto" aria-labelledby="home-title">
+      <!-- All content is now inside a semi-transparent card -->
+      <div class="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-6 mt-6">
+        <h1 class="text-3xl font-extrabold text-teal-700 mb-2">Welcome to Assistive Vision</h1>
+        <p class="text-teal-800 mb-4 font-medium text-lg">
+          Your audio-first tool for navigating the world. This application uses AI to identify objects and provide audio alerts.
+        </p>
+      </div>
+      
+      <div class="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-6 mt-6">
+        <h2 class="text-xl font-bold text-teal-700 mb-3">How It Works</h2>
+        <ol class="list-decimal list-inside pl-2 space-y-2 text-teal-800 text-base leading-relaxed">
+          <li><strong>Navigate:</strong> Use the navigation buttons or voice commands (Press 'V') to move between pages. Say "Help" at any time to hear your options.</li>
+          <li><strong>Detect Objects:</strong> Go to the "Upload" page to submit a pre-recorded video clip and hear audio alerts for specific objects.</li>
+        </ol>
+      </div>
+
+      <div class="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-6 mt-6">
+        <h2 class="text-xl font-bold text-teal-700 mb-3">Get Started</h2>
+        <p class="text-teal-800 text-base leading-relaxed">You can explore the "About" page to learn more about the technology. If you are a new user, please "Register". If you are returning, "Login" to access your profile and upload history.</p>
+        <p class="mt-4 font-semibold text-teal-800">Press 'R' at any time to hear a list of all interactive elements on your current page.</p>
+        <p class="mt-2 font-semibold text-teal-800">Press 'T' or use the button in the header to toggle between classic and dark themes.</p>
+      </div>
+
+      <div class="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-4 mt-6">
+        <img class="w-full h-auto rounded-lg block" src="https://live.staticflickr.com/7093/7194630246_c23df4122c_b.jpg"  alt="A person walking on a city crosswalk, illustrating navigation." />
+      </div>
+    </section>
+
+    <section id="project-page" class="page max-w-3xl mx-auto hidden" aria-labelledby="project-title">
+      <div class="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-6 mt-6">
+        <h1 class="text-3xl font-extrabold text-teal-700 mb-2">About the Project</h1>
+        <p class="text-teal-800 mb-4 font-medium text-lg">
+          This tool is designed to empower visually impaired users by providing an extra layer of environmental awareness.
+        </p>
+      </div>
+      <div class="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-6 mt-6">
+        <h2 class="text-xl font-bold text-teal-700 mb-3">Core Technology</h2>
+        <p class="text-teal-800 text-base leading-relaxed">The application uses a computer vision model (simulated in the 'Upload' section) to identify key objects for navigation, such as vehicles, pedestrians, and crosswalks.</p>
+        <p class="mt-2 text-teal-800 text-base leading-relaxed">An offline text-to-speech (TTS) engine prioritizes and announces all AI-generated information. The entire interface is designed to be fully operable via keyboard and voice commands.</p>
+      </div>
+      <div class="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-6 mt-6">
+        <h2 class="text-xl font-bold text-teal-700 mb-3">Future Goals</h2>
+        <p class="text-teal-800 text-base leading-relaxed">We are actively working on expanding this platform. Our next major goal is to implement real-time object detection directly from a device's camera, providing instant feedback while a user is walking. We also plan to improve object tracking and add more object categories, such as 'Stairs' or 'Obstacle'.</p>
+      </div>
+    </section>
+
+    <section id="login-page" class="page max-w-3xl mx-auto hidden" aria-labelledby="login-title">
+      <h1 class="text-3xl font-extrabold text-teal-700 mb-2 sr-only">Login</h1>
+      <!-- Made card bg-white/90 for consistency -->
+      <form id="login-form" class="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-6 mt-6" aria-label="Login form">
+        <h2 class="text-3xl font-extrabold text-teal-700 mb-4 text-center">Login</h2>
+        <div class="mb-4">
+          <label for="login-username" class="block mb-1.5 font-bold text-teal-800">Username</label>
+          <div class="flex flex-col md:flex-row gap-2 items-stretch md:items-center">
+            <input type="text" id="login-username" name="username" autocomplete="username" required aria-required="true" class="flex-1 py-3 px-4 rounded-lg border-2 border-teal-200 bg-white focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-teal-400 text-base" />
+            <button type="button" class="mic-btn bg-white border border-teal-100 py-2 px-3 rounded-lg cursor-pointer text-lg shadow-md hover:bg-teal-50 focus:outline-none focus:ring-2 focus:ring-teal-400 md:align-self-auto self-end" data-target="login-username" title="Use voice to fill username" aria-label="Voice input username">🎤</button>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label for="login-password" class="block mb-1.5 font-bold text-teal-800">Password</label>
+          <div class="flex flex-col md:flex-row gap-2 items-stretch md:items-center">
+            <input type="password" id="login-password" name="password" autocomplete="current-password" required aria-required="true" class="flex-1 py-3 px-4 rounded-lg border-2 border-teal-200 bg-white focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-teal-400 text-base" />
+            <button type="button" class="mic-btn bg-white border border-teal-100 py-2 px-3 rounded-lg cursor-pointer text-lg shadow-md hover:bg-teal-50 focus:outline-none focus:ring-2 focus:ring-teal-400 md:align-self-auto self-end" data-target="login-password" title="Use voice to fill password" aria-label="Voice input password">🎤</button>
+          </div>
+        </div>
+
+        <div class="mt-5">
+          <button type="submit" class="bg-gradient-to-b from-teal-500 to-teal-600 text-white py-3 px-6 rounded-full font-extrabold cursor-pointer shadow-lg hover:from-teal-600 hover:to-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-opacity-50 transition-all" aria-label="Login">Login</button>
+          <button type="button" id="to-register" class="bg-transparent border-none text-teal-700 cursor-pointer underline font-bold hover:text-teal-900 ml-4" aria-label="Don't have an account? Register">Don't have an account? Register</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="register-page" class="page max-w-3xl mx-auto hidden" aria-labelledby="register-title">
+      <h1 class="text-3xl font-extrabold text-teal-700 mb-2 sr-only">Register</h1>
+      <!-- Made card bg-white/90 for consistency -->
+      <form id="register-form" class="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-6 mt-6" aria-label="Register form">
+        <h2 class="text-3xl font-extrabold text-teal-700 mb-4 text-center">Create Account</h2>
+        
+        <div class="mb-4">
+          <label for="reg-username" class="block mb-1.5 font-bold text-teal-800">Username</label>
+          <div class="flex flex-col md:flex-row gap-2 items-stretch md:items-center">
+            <input type="text" id="reg-username" name="username" required aria-required="true" class="flex-1 py-3 px-4 rounded-lg border-2 border-teal-200 bg-white focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-teal-400 text-base" />
+            <button type="button" class="mic-btn bg-white border border-teal-100 py-2 px-3 rounded-lg cursor-pointer text-lg shadow-md hover:bg-teal-50 focus:outline-none focus:ring-2 focus:ring-teal-400 md:align-self-auto self-end" data-target="reg-username" aria-label="Voice input username">🎤</button>
+          </div>
+        </div>
+        <div class="mb-4">
+          <label for="reg-password" class="block mb-1.5 font-bold text-teal-800">Password</label>
+          <div class="flex flex-col md:flex-row gap-2 items-stretch md:items-center">
+            <input type="password" id="reg-password" name="password" required aria-required="true" class="flex-1 py-3 px-4 rounded-lg border-2 border-teal-200 bg-white focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-teal-400 text-base" />
+            <button type="button" class="mic-btn bg-white border border-teal-100 py-2 px-3 rounded-lg cursor-pointer text-lg shadow-md hover:bg-teal-50 focus:outline-none focus:ring-2 focus:ring-teal-400 md:align-self-auto self-end" data-target="reg-password" aria-label="Voice input password">🎤</button>
+          </div>
+        </div>
+        <div class="mb-4">
+          <label for="reg-confirm-password" class="block mb-1.5 font-bold text-teal-800">Confirm Password</label>
+          <div class="flex flex-col md:flex-row gap-2 items-stretch md:items-center">
+            <input type="password" id="reg-confirm-password" name="confirm-password" required aria-required="true" class="flex-1 py-3 px-4 rounded-lg border-2 border-teal-200 bg-white focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-teal-400 text-base" />
+            <button type="button" class="mic-btn bg-white border border-teal-100 py-2 px-3 rounded-lg cursor-pointer text-lg shadow-md hover:bg-teal-50 focus:outline-none focus:ring-2 focus:ring-teal-400 md:align-self-auto self-end" data-target="reg-confirm-password" aria-label="Voice input confirm password">🎤</button>
+          </div>
+        </div>
+        <div class="mb-4">
+          <label for="reg-language" class="block mb-1.5 font-bold text-teal-800">Preferred Language</label>
+          <select id="reg-language" name="language" required aria-required="true" class="w-full flex-1 py-3 px-4 rounded-lg border-2 border-teal-200 bg-white focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-teal-400 text-base">
+            <option value="en" selected>English</option>
+            <option value="hi">Hindi (हिन्दी)</option>
+            <option value="te">Telugu (తెలుగు)</option>
+          </select>
+        </div>
+        <div class="mt-5">
+          <button type="submit" class="bg-gradient-to-b from-teal-500 to-teal-600 text-white py-3 px-6 rounded-full font-extrabold cursor-pointer shadow-lg hover:from-teal-600 hover:to-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-opacity-50 transition-all" aria-label="Create account">Create account</button>
+          <button type="button" id="to-login" class="bg-transparent border-none text-teal-700 cursor-pointer underline font-bold hover:text-teal-900 ml-4" aria-label="Already have an account? Login">Already have an account? Login</button>
+        </div>
+      </form>
+    </section>
+    <section id="upload-page" class="page max-w-3xl mx-auto hidden" aria-labelledby="upload-title">
+      <h1 class="text-3xl font-extrabold text-teal-700 mb-2 sr-only">Upload for Detection</h1>
+      <div class="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-6 mt-6">
+        <h2 class="text-3xl font-extrabold text-teal-700 mb-4 text-center">Upload for Detection</h2>
+        <label for="video-input" class="block mb-1.5 font-bold text-teal-800">Select video (short clips recommended)</label>
+        <input type="file" id="video-input" accept="video/*" aria-describedby="upload-help" class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100" />
+        <div id="upload-help" class="text-sm text-teal-700 mt-2">After uploading, the model will analyze frames and announce nearby objects in your preferred language.</div>
+
+        <div class="mt-5">
+          <button id="upload-btn" class="bg-gradient-to-b from-teal-500 to-teal-600 text-white py-3 px-6 rounded-full font-extrabold cursor-pointer shadow-lg hover:from-teal-600 hover:to-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-opacity-50 transition-all" aria-label="Upload and Detect">Upload & Detect</button>
+          <button id="demo-btn" class="bg-transparent border-none text-teal-700 cursor-pointer underline font-bold hover:text-teal-900 ml-4" aria-label="Try demo detection">Try demo detection</button>
+        </div>
+        <div id="detection-results" aria-live="polite" class="mt-4 text-teal-900 font-bold"></div>
+        <div id="video-player-container" class="mt-4"></div>
+        <div id="audio-player-container" class="mt-4"></div>
+      <div class="bg-white/90 backdrop-blur-sm border-2 border-dashed border-gray-400 rounded-xl shadow-lg p-6 mt-6">
+        <h2 class="text-xl font-bold text-gray-700 mb-3">Real-Time Detection (Coming Soon)</h2>
+        <p class="text-gray-800 mb-4 font-medium">This feature will allow you to use your device's camera for live object detection and audio feedback.</p>
+        <button type="button" class="bg-gradient-to-b from-teal-500 to-teal-600 text-white py-3 px-6 rounded-full font-extrabold cursor-pointer shadow-lg hover:from-teal-600 hover:to-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-opacity-50 transition-all" aria-label="Start Live Camera">Start Live Camera</button>
+      </div>
+    </section>
+    <section id="history-page" class="page max-w-3xl mx-auto hidden" aria-labelledby="history-title">
+      <h1 class="text-3xl font-extrabold text-teal-700 mb-2 sr-only">Your Upload History</h1>
+      <div class="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-6 mt-6">
+        <h2 class="text-3xl font-extrabold text-teal-700 mb-4 text-center">Upload History</h2>
+        <p class="text-teal-800 text-base leading-relaxed">Here is a list of your previously uploaded videos and their detection results.</p>
+        <ul id="history-list" class="mt-4 space-y-4">
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bg-teal-100/70 border-t border-teal-800/10 text-teal-800 text-center py-5 font-bold mt-8 z-10" role="contentinfo">
+    <p>© 2025 Assistive Vision Project — Audio-first UI for visually impaired users.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
+

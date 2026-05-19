@@ -1,0 +1,142 @@
+/*
+This file ('styles.css') is for your custom CSS rules.
+
+Most of the application's styling is handled by Tailwind CSS (loaded in index.html).
+This file is for base styles, fallbacks, or any custom classes
+you want to create that Tailwind doesn't provide.
+*/
+
+body {
+color: var(--text-color);
+/* These base styles are also set by Tailwind, but
+serve as a good fallback. */
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+line-height: 1.5;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+}
+
+/* Theme color variables */
+:root {
+  --primary-color: #0EA5A4;    /* teal - buttons/active elements */
+  --secondary-color: #2563EB;  /* blue - links/highlights */
+  --accent-color: #22C55E;     /* green - alerts/important info */
+  --warning-color: #EF4444;    /* red - obstacle alerts */
+  --text-color: #1F2937;       /* dark gray - readability */
+  --bg-color: #F8FAFC;         /* soft white - reduces glare */
+  --card-color: #ffffff;       /* white cards */
+  --overlay-color: rgba(255, 255, 255, 0.35); /* light overlay */
+  --hover-bg-color: rgba(255, 255, 255, 0.7); /* light hover */
+}
+
+/* Background gradient */
+.background-gradient {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: linear-gradient(135deg, var(--bg-color) 0%, var(--bg-color) 70%, rgba(0,0,0,0.05) 100%);
+z-index: -2;
+}
+
+/* Light overlay to enhance text contrast */
+.background-overlay {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: var(--overlay-color);
+z-index: -1;
+}
+
+/* --- override common utilities with theme colors --- */
+.text-teal-900, .text-teal-800, .text-teal-700 {
+    color: var(--primary-color) !important;
+}
+.text-blue-600, .text-blue-700 {
+    color: var(--secondary-color) !important;
+}
+.text-green-600, .text-green-700 {
+    color: var(--accent-color) !important;
+}
+.text-red-600, .text-red-700 {
+    color: var(--warning-color) !important;
+}
+.bg-teal-50 {
+    background-color: var(--bg-color) !important;
+}
+.bg-teal-100, .bg-white {
+    background-color: var(--card-color) !important;
+}
+.bg-teal-500, .bg-teal-600, .bg-teal-700, .bg-teal-800 {
+    background-color: var(--primary-color) !important;
+}
+.bg-blue-600, .bg-blue-700 {
+    background-color: var(--secondary-color) !important;
+}
+.bg-green-600, .bg-green-700 {
+    background-color: var(--accent-color) !important;
+}
+.bg-red-600, .bg-red-700 {
+    background-color: var(--warning-color) !important;
+}
+.border-teal-800 { border-color: var(--primary-color) !important; }
+.bg-gradient-to-b.from-teal-500.to-teal-600 {
+    background-image: linear-gradient(to bottom, var(--primary-color), var(--accent-color)) !important;
+}
+.border-teal-800\/10 {
+    border-color: rgba(14,165,164,0.1) !important; /* using primary color with opacity */
+}
+.focus\:ring-teal-400 {
+    --tw-ring-color: var(--accent-color) !important;
+}
+.hover\:bg-teal-200\/70:hover {
+    background-color: var(--hover-bg-color) !important;
+}
+
+/* lighter utility overrides for inputs and mic buttons */
+.border-teal-200 { border-color: #ccc !important; }
+.border-teal-100 { border-color: #ddd !important; }
+.hover\:bg-teal-50:hover { background-color: var(--hover-bg-color) !important; }
+.focus\:border-teal-400 { border-color: var(--primary-color) !important; }
+
+/* generic card bg tweak */
+.bg-white\/90 { background-color: rgba(255,255,255,0.9) !important; }
+
+/* override navigation link buttons */
+.nav-link-btn {
+    color: var(--primary-color);
+    border-color: transparent;
+}
+.nav-link-btn:hover, .nav-link-btn:focus {
+    background-color: var(--hover-bg-color);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+/* voice navigation button styling */
+#voice-nav-btn {
+    background-color: var(--primary-color);
+    color: var(--card-color);
+    border-color: var(--primary-color);
+}
+#voice-nav-btn:hover, #voice-nav-btn:focus{
+    background-color: var(--accent-color);
+    color: var(--primary-color);
+    border-color: var(--accent-color);
+}
+
+/* footer adjustments */
+footer {
+    background-color: var(--card-color);
+    color: var(--primary-color);
+    border-top-color: rgba(44,62,80,0.1);
+}
+
+/* --- Ensure content is above the background --- */
+header, main, footer {
+position: relative;
+z-index: 1;
+}

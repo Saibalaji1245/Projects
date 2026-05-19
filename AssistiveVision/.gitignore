@@ -1,0 +1,134 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Distribution / packaging
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+*.log
+.pytest_cache/
+pytestdebug.log
+
+# Django / Flask stuff
+db.sqlite3
+instance/
+.webassets-cache
+*.db
+
+# PyCharm & VSCode
+.idea/
+.vscode/
+
+# =========================
+# React / Node
+# =========================
+# dependencies
+node_modules/
+bower_components/
+
+# production build
+build/
+dist/
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# lock files (optional, keep one if needed)
+# package-lock.json
+# yarn.lock
+
+# =========================
+# OS Files
+# =========================
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# =========================
+# Logs and Temp
+# =========================
+*.log
+*.pot
+*.pid
+*.seed
+*.pid.lock
+*.swp
+*.swo
+*.tmp
+*.bak
+
+# =========================
+# Custom project folders
+# =========================
+# If you have your React app in a subfolder like /client or /frontend
+/client/node_modules/
+/client/build/
+/frontend/node_modules/
+/frontend/build/
+/node_modules/
+
+# =========================
+# Project-specific ignores
+# =========================
+
+# Model weights (large files)
+models/*.pt
+
+# Results and output data
+results/
+
+# Uploaded media or input files
+uploads/
+
+# Temporary analysis files
+allfiles.txt
